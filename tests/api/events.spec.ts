@@ -1,37 +1,27 @@
 import { expect } from "@playwright/test";
 import { test } from "../../fixture/login";
+import { EventFactory } from "../../constructor/events/eventFactory";
 
-let eventID: number = 110292;
+
 
 test.describe("Event API Tests", () => {
+
+    test.describe.configure({mode: 'serial'})
+    let eventID: number;
+    const eventData = EventFactory.create('Workshop');
     
     test('Create Event', async({api})=>{
 
-        const payload = {
-            title: "Test Automation Summit 2027",
-            description: "A premier technology conference.",
-            category: "Conference",
-            venue: "Mumbai International Centre",
-            city: "Mumbai",
-            eventDate: "2026-10-15T09:00:00.000Z",
-            price: 1500,
-            totalSeats: 500,
-            imageUrl: "https://example.com/banner.jpg"
-        }
-
-        const response = await api.event().createEvent(payload);
+        const response = await api.event().createEvent(eventData);
         expect(response.status()).toBe(201);
         expect(response.ok()).toBeTruthy();
 
         const body = await response.json();
-
-        expect(body.data.title).toBe(payload.title);
-        expect(body.data.price).toBe(String(payload.price));
-        expect(body.data.totalSeats).toBe((payload.totalSeats));
+        expect(body.data.title).toBe(eventData.title);
+        expect(body.data.price).toBe(String(eventData.price));
+        expect(body.data.totalSeats).toBe((eventData.totalSeats));
 
         eventID = body.data.id; 
-        console.log(eventID);
-        // Store the created event ID for subsequent tests
 
     })
 
@@ -41,7 +31,7 @@ test.describe("Event API Tests", () => {
         expect(response.status()).toBe(200);
         const body = await response.json();
         expect(body.data.id).toBe(eventID);
-        // expect(body.data.title).toBe("Dilli Diwali Mela");
+        expect(body.data.title).toBe(eventData.title);
         expect(body.data.availableSeats).toBeDefined();
         expect(body).toHaveProperty("data.price");
     })

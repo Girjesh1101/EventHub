@@ -33,12 +33,12 @@ export class BookingPage {
 
 
     async captureEventName():Promise<string>{
+        await this.eventNameLabel.waitFor({state: "visible"});
         return await this.eventNameLabel.innerText();
     }
 
     async captureEventPrice():Promise<string>{
-        const price = await this.eventPrice.innerText();
-        console.log(price.replace("$","").replace(",",""));
+        
         return (await this.eventPrice.innerText()).replace("$","").replace(",","");
     }
 

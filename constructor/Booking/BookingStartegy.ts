@@ -11,7 +11,7 @@ export class validBooking implements BookingStrategy {
         return new BookingBuilder()
             .withCustomerName('Test Automation')
             .withCustomerPhone('9876543210')
-            .withCustomerEmail('Test@gmail.com')
+            .withCustomerEmail('test@gmail.com')
             .withQuantity(2)
             .build();
     }

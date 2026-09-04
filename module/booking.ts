@@ -4,3 +4,7 @@ export interface Booking {
     customerPhone: string;
     quantity: number
 }
+
+export interface APIBooking extends Booking{
+    eventId: number
+}
