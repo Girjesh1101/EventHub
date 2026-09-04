@@ -1,5 +1,5 @@
 import { Locator, Page } from "@playwright/test";
-import { Login } from "../../module/login";
+import { Login } from "../module/login";
 
 export class LoginPage {
 
@@ -51,7 +51,5 @@ export class LoginPage {
         await this.enterPassword(loginDetails.password);
         await this.clickSignIn();
     }
-
-
 
 }
