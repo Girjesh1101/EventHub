@@ -8,15 +8,16 @@ import { BookingPage } from "../../pages/bookingPage";
 import { Booking } from "../../module/booking";
 import { BookingHistory } from "../../pages/bookingHistory";
 import { BookingFactory } from "../../constructor/Booking/Bookingfactory";
+import { envConfig } from "../../config/config";
 
-const url : string = "https://eventhub.rahulshettyacademy.com/login";
-const eventName : string = 'Hollywood Monsoon Night — Los Angeles';
+
+const eventName : string = process.env.eventName!;
 test('Login Test', async({page})=>{
 
     const loginObj = new LoginPage(page);
     const loginData: Login = LoginFactory.create('valid');
     console.log(loginData);
-    await loginObj.goto(url);
+    await loginObj.goto('/login');
     await loginObj.login(loginData)
     const verifiedEmail = await loginObj.verifyEmail();
     expect(verifiedEmail).toBe(loginData.email);

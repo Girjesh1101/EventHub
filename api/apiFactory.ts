@@ -4,14 +4,14 @@ import { BookingAPI } from "./bookingAPI";
 
 export class ApiFactory{
     
-    constructor(private request: APIRequestContext, private baseUrl: string, private token:string){}
+    constructor(private request: APIRequestContext, private token:string){}
 
     event(){
-        return new EventAPI(this.request, this.baseUrl, this.token);
+        return new EventAPI(this.request, this.token);
     }
 
     bookings(){
-        return new BookingAPI(this.request, this.baseUrl, this.token);
+        return new BookingAPI(this.request, this.token);
     }
     
 }

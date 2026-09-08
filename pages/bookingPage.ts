@@ -42,7 +42,7 @@ export class BookingPage {
         return (await this.eventPrice.innerText()).replace("$","").replace(",","");
     }
 
-    async enetrQuantity(qty: number){
+    async enterQuantity(qty: number){
 
         for(let i  = 1 ; i< qty ; i++){
             await this.quantityBtn.click();
@@ -71,7 +71,7 @@ export class BookingPage {
     }
 
     async fillBookingDetails(bookingDetails: Booking): Promise<string>{
-        await this.enetrQuantity(bookingDetails.quantity);
+        await this.enterQuantity(bookingDetails.quantity);
         await this.enterCustomerName(bookingDetails.customerName);
         await this.eneterCustomerEmail(bookingDetails.customerEmail);
         await this.enterCustomerPhone(bookingDetails.customerPhone);

@@ -4,6 +4,7 @@ import { AuthClient } from "../api/AuthClient";
 import { ApiFactory } from "../api/apiFactory";
 import { LoginPage } from "../pages/loginPage";
 import { LoginFactory } from "../constructor/login/LoginFactory";
+import { envConfig } from "../config/config";
 
 type ApiFixture = {
     token: string;
@@ -11,31 +12,27 @@ type ApiFixture = {
     page: Page
 }
 
-const BASE_URL = "https://api.eventhub.rahulshettyacademy.com";
-const UI_BASE_URL ='https://eventhub.rahulshettyacademy.com/login';
+// const BASE_URL = "https://api.eventhub.rahulshettyacademy.com";
+// const UI_BASE_URL = process.env.BASE_URL;
 export const test = base.extend<ApiFixture>({
 
     token: async({request}, use)=>{
         
-        const endpoint = `${BASE_URL}/api/auth/login`;
-        // const loginData : Login = {
-        //     email: "prem@yopmail.com",
-        //     password: "Automation@2026"
-        // };
+        const endpoint = `${envConfig.apiBaseURL}/api/auth/login`;
         const loginData = LoginFactory.create('valid');
         const login = new AuthClient(request, endpoint);
         const token = await login.login(loginData.email, loginData.password);
         await use(token);
     },
     api: async({request, token}, use)=>{
-        const api = new ApiFactory(request, BASE_URL, token);
+        const api = new ApiFactory(request, token);
         await use(api);
     },
     page: async({page},use)=>{
 
         const loginData = LoginFactory.create('valid');
         const login = new LoginPage(page);
-        await login.goto(`${UI_BASE_URL}/`)
+        await login.goto(`/login`)
         await login.login(loginData);
 
         await use(page);

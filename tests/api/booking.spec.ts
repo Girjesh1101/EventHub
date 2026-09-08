@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
-import { test } from "../../fixture/login";
 import { APIBooking } from "../../module/booking";
 import { BookingFactory } from "../../constructor/Booking/Bookingfactory";
+import { test } from "../../fixture/testFixture";
 
 
 

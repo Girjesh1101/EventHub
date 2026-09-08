@@ -1,9 +1,9 @@
 import test, { expect, request } from "@playwright/test";
 import { AuthClient } from "../../api/AuthClient";
 import { Login } from "../../module/login";
+import { envConfig } from "../../config/config";
 
 
-const BASE_URL ="https://api.eventhub.rahulshettyacademy.com";
 let token:string ;
 
 test.describe('Login API Tests', ()=>{
@@ -11,7 +11,7 @@ test.describe('Login API Tests', ()=>{
 
     test.beforeEach('generate token', async({request})=>{
 
-        const endpoint = `${BASE_URL}/api/auth/login`;
+        const endpoint = `${envConfig.apiBaseURL}/api/auth/login`;
         const authClient = new AuthClient(request, endpoint);
 
         const loginData: Login = {

@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import { test } from "../../fixture/login";
+import { test } from "../../fixture/testFixture";
 import { EventFactory } from "../../constructor/events/eventFactory";
 
 

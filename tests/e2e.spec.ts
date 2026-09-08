@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { EventFactory } from "../constructor/events/eventFactory";
-import { test } from "../fixture/login";
+import { test } from "../fixture/testFixture";
 import { SearchPage } from "../pages/searchPage";
 import { BookingPage } from "../pages/bookingPage";
 import { Booking } from "../module/booking";
@@ -29,13 +29,16 @@ test('end to end flow', async ({page, api})=>{
     expect(Number(eventPrice)).toBe(eventData.price);
 
     const bookingData: Booking = BookingFactory.create('valid');
-    const totalPrice = await booking.fillBookingDetails(bookingData);
+    const totalPriceLabel = await booking.fillBookingDetails(bookingData);
+
+    const totalPrice: number =  bookingData.quantity * eventData.price;
+    expect(Number( totalPriceLabel)).toBe(totalPrice)
     const bookingId = await booking.captureBookingId();
     const {customerName,ticket ,total}  = await booking.captureBookingDetails();
     
     expect(customerName).toBe(bookingData.customerName);
     expect(Number(ticket)).toBe(bookingData.quantity);
-    expect(total).toBe(totalPrice);
+    expect(Number(total)).toBe(totalPrice);
 
     const history = new BookingHistory(page);
     await history.navigateToMyBooking();
