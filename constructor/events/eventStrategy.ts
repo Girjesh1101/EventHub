@@ -31,7 +31,7 @@ export class WorkshopStrategy implements EventStrategy{
             .withCity('Workshop')
             .withDescription('A premier technology conference')
             .withVenue('Mumbai International Centre')
-            .withPrice(100)
+            .withPrice(200)
             .withTotalSeat(200)
             .withEventData(getRandomFutureData())
             .build();
@@ -47,7 +47,7 @@ export class SportStrategy implements EventStrategy{
             .withCity('Mumbai')
             .withDescription('A premier technology conference')
             .withVenue('Mumbai International Centre')
-            .withPrice(100)
+            .withPrice(500)
             .withTotalSeat(200)
             .withEventData(getRandomFutureData())
             .build();
@@ -63,7 +63,7 @@ export class ConcertStrategy implements EventStrategy{
             .withCity('Mumbai')
             .withDescription('A premier technology conference')
             .withVenue('Mumbai International Centre')
-            .withPrice(100)
+            .withPrice(300)
             .withTotalSeat(200)
             .withEventData(getRandomFutureData())
             .build();

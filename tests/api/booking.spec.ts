@@ -2,6 +2,8 @@ import { expect } from "@playwright/test";
 import { APIBooking } from "../../module/booking";
 import { BookingFactory } from "../../constructor/Booking/Bookingfactory";
 import { test } from "../../fixture/testFixture";
+import { BookingAssertion } from "../../asserttions/bookingAssertions";
+import { Assertion } from "../../utils/genericAssertions";
 
 
 
@@ -14,18 +16,15 @@ test.describe('Booking Event', ()=>{
         { ...BookingFactory.create('valid'),
             eventId: 1
         }
+    const assert = new Assertion();    
 
     test('Create Booking', async({api})=>{
 
         
         const response = await api.bookings().createBooking(bookingData);
-        console.log(await response.json());
-        expect(response.status()).toBe(201);
+        assert.verifyStatusCode(response, 201);
+        BookingAssertion.verifyAPIBookingCreated(response , bookingData);
         const body = await response.json();
-        expect(body.data.eventId).toBe(bookingData.eventId);
-        expect(body.data.status).toBe('confirmed');
-        expect(body.data.customerName).toBe(bookingData.customerName);
-        expect(body.data.customerEmail).toBe(bookingData.customerEmail);
         bookingId = body.data.id;
         bookingRef = body.data.bookingRef;
         console.log('Booking Id: ', bookingId , 'Booking Ref: ', bookingRef);
@@ -44,17 +43,14 @@ test.describe('Booking Event', ()=>{
     test('GET Booking By bookingID', async({api})=>{
 
         const response = await api.bookings().getBookingById(bookingId);
-        expect(response.status()).toBe(200);
-        const body = await response.json();
-        expect(body.data.id).toBe(bookingId);
-        expect(body.data.customerName).toBe(bookingData.customerName);
-        expect(body.data.status).toBe('confirmed');
+        assert.verifyStatusCode(response, 200);
+        BookingAssertion.verifyAPIBookingCreated(response, bookingData);
     })
 
     test('GET Booking By Booking Reference', async({api})=>{
 
         const response = await api.bookings().getBookingByRef(bookingRef);
-        expect(response.status()).toBe(200);
+        assert.verifyStatusCode(response, 200);
         const body = await response.json();
         expect(body.data.bookingRef).toBe(bookingRef);
     })
@@ -62,14 +58,14 @@ test.describe('Booking Event', ()=>{
      test('DELETE Booking By bookingID', async({api})=>{
 
         const response = await api.bookings().deleteBooking(bookingId);
-        expect(response.status()).toBe(200);
+        assert.verifyStatusCode(response, 200);
         const body = await response.json();
         expect(body.success).toBe(true);
         expect(body.message).toBe('Booking cancelled');
 
         const postDeleteRes = await api.bookings().getBookingById(bookingId);
-        const postDeletebody =await postDeleteRes.json();
-        expect(postDeleteRes.status()).toBe(404);
+        assert.verifyStatusCode(postDeleteRes, 404);
+        const postDeletebody = await postDeleteRes.json();
         expect(postDeletebody.error).toBe(`Booking with id ${bookingId} not found`);
 
     })

@@ -3,14 +3,31 @@ import { ApiClient } from "../utils/apiClient";
 export class EventAPI extends ApiClient{
 
     async getAllEvents(){
-        return await this.get(`/api/events`);
+        const response  = await this.get(`/api/events`);
+        if(response.ok()){
+            return response;
+        }else{
+            throw new Error(`API Failed ${response.status()}`)
+        }
     }
 
     async getEventById(eventId: number){
-        return await this.get(`/api/events/${eventId}`);
+        const response = await this.get(`/api/events/${eventId}`);
+        if(response.ok()){
+            return response;
+        }else{
+            throw new Error(`API Failed ${response.status()}`)
+        }
     }
 
     async createEvent(payload: unknown){
-        return await this.post(`/api/events`, payload);
+        // return response is 200 otherwsie throw messsga here 
+        // error handling
+        const response = await this.post(`/api/events`, payload);
+        if(response.ok()){
+            return response;
+        }else{
+            throw new Error(`API Failed ${response.status()}`)
+        }
     }
 }

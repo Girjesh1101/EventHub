@@ -1,5 +1,5 @@
 import { Event } from "../../module/event";
-import { ConcertStrategy, FestivalStrategy, WorkshopStrategy } from "./eventStrategy";
+import { ConcertStrategy, ConferenceStrategy, FestivalStrategy, SportStrategy, WorkshopStrategy } from "./eventStrategy";
 
 export class EventFactory {
 
@@ -13,11 +13,11 @@ export class EventFactory {
             return new WorkshopStrategy().creat();
         }else if(eventType === 'Confrence'){
 
-            return new WorkshopStrategy().creat();
+            return new ConferenceStrategy().creat();
         }
         else if(eventType === 'Sports'){
 
-            return new WorkshopStrategy().creat();
+            return new SportStrategy().creat();
         }else if(eventType === 'Festival'){
 
             return new FestivalStrategy().creat();

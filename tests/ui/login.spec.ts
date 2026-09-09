@@ -9,6 +9,7 @@ import { Booking } from "../../module/booking";
 import { BookingHistory } from "../../pages/bookingHistory";
 import { BookingFactory } from "../../constructor/Booking/Bookingfactory";
 import { envConfig } from "../../config/config";
+import { Assertion } from "../../utils/genericAssertions";
 
 
 const eventName : string = process.env.eventName!;
@@ -20,7 +21,9 @@ test('Login Test', async({page})=>{
     await loginObj.goto('/login');
     await loginObj.login(loginData)
     const verifiedEmail = await loginObj.verifyEmail();
-    expect(verifiedEmail).toBe(loginData.email);
+    // expect(verifiedEmail).toBe(loginData.email);
+    const assertion = new Assertion();
+    assertion.verifyText(loginObj.email_Label, loginData.email);
 
     const search = new SearchPage(page);
     const totalSeatAvailable = await search.searchEventAndBook(eventName);

@@ -8,4 +8,5 @@ node_modules/
 /playwright/.auth/
 .env
 .env.qa
+.env.uat
 .DS_Store
