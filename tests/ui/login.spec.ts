@@ -7,7 +7,7 @@ import { SearchPage } from "../../pages/searchPage";
 import { BookingPage } from "../../pages/bookingPage";
 import { Booking } from "../../module/booking";
 import { BookingHistory } from "../../pages/bookingHistory";
-import { BookingFactory } from "../../constructor/Booking/Bookingfactory";
+import { BookingFactory } from "../../constructor/Booking/BookingFactory";
 import { envConfig } from "../../config/config";
 import { Assertion } from "../../utils/genericAssertions";
 

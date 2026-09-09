@@ -4,7 +4,7 @@ import { test } from "../fixture/testFixture";
 import { SearchPage } from "../pages/searchPage";
 import { BookingPage } from "../pages/bookingPage";
 import { Booking } from "../module/booking";
-import { BookingFactory } from "../constructor/Booking/Bookingfactory";
+import { BookingFactory } from "../constructor/Booking/BookingFactory";
 import { BookingHistory } from "../pages/bookingHistory";
 import { BookingAssertion } from "../asserttions/bookingAssertions";
 import { EventAssertions } from "../asserttions/eventAssertions";

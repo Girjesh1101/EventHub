@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { APIBooking } from "../../module/booking";
-import { BookingFactory } from "../../constructor/Booking/Bookingfactory";
+import { BookingFactory } from "../../constructor/Booking/BookingFactory";
 import { test } from "../../fixture/testFixture";
 import { BookingAssertion } from "../../asserttions/bookingAssertions";
 import { Assertion } from "../../utils/genericAssertions";
