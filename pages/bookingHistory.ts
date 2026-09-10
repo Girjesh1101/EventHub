@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { Logger } from "../utils/logger";
 
 export class BookingHistory{
 
@@ -13,12 +14,15 @@ export class BookingHistory{
     }
 
     async navigateToMyBooking():Promise<void>{
+        Logger.info("Opening My Bookings page");
         await this.myBookingNav.click();
     }
 
     async isBookingVisible(bookingId: string):Promise<boolean>{
+        Logger.info(`Checking booking visibility for ID: ${bookingId}`);
         await this.bookingCarts.first().waitFor({state:'visible'});
-        const isval = await this.bookingCarts.locator('.booking-ref').filter({hasText: bookingId}).isVisible()
-        return isval
+        const isval = await this.bookingCarts.locator('.booking-ref').filter({hasText: bookingId}).isVisible();
+        Logger.info(`Booking ${bookingId} visible: ${isval}`);
+        return isval;
     }
 }

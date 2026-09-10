@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { Booking } from "../module/booking";
+import { Logger } from "../utils/logger";
 
 export class BookingPage {
 
@@ -34,39 +35,45 @@ export class BookingPage {
 
     async captureEventName():Promise<string>{
         await this.eventNameLabel.waitFor({state: "visible"});
+        Logger.info(`Capture event Name : ${await this.eventNameLabel.innerText()}`)
         return await this.eventNameLabel.innerText();
     }
 
     async captureEventPrice():Promise<string>{
-        
+        Logger.info('Capture Event Price')
         return (await this.eventPrice.innerText()).replace("$","").replace(",","");
     }
 
     async enterQuantity(qty: number){
-
+        Logger.info(`Quantity : ${qty}`)
         for(let i  = 1 ; i< qty ; i++){
             await this.quantityBtn.click();
         }
     }
 
     async eneterCustomerEmail(customerEmail: string):Promise<void>{
+        Logger.info(`Ente Phone Customer Email : ${customerEmail}`);
         await this.customerEmailInput.fill(customerEmail);
     }
 
     async enterCustomerName(customerName: string):Promise<void>{
+        Logger.info(`Ente Phone Customer Name : ${customerName}`);
         await this.customerNameInput.fill(customerName);
     }
 
      async enterCustomerPhone(customerPhone: string):Promise<void>{
+        Logger.info(`Ente Phone Customer Phone : ${customerPhone}`);
         await this.customerPhoneInput.fill(customerPhone);
     }
 
     async clickConfirmBooking():Promise<void>{
+        Logger.info(`Clicking on Confirm Booking`)
         await this.confirmBookingBtn.click();
     }
 
     async captureTotalPrice():Promise<string>{
         const price = await this.totalEventPrice.innerText();
+        Logger.info(`Capture Total Price :  ${price}`);
         return price.split('$')[1].replace(',','')
     }
 
@@ -81,6 +88,7 @@ export class BookingPage {
     }
 
     async captureBookingId():Promise<string>{
+        Logger.info(`Capture BookingID : ${await this.captureBookingIdLabel.innerText()}`);
         return await this.captureBookingIdLabel.innerText();
     }
 

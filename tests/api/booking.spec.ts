@@ -33,7 +33,6 @@ test.describe('Booking Event', ()=>{
     test('GET all booking', async({api})=>{
 
         const response = await api.bookings().getAllBookings();
-        console.log(await response.json());
         const body = await response.json();
         expect(response.ok()).toBeTruthy();
         expect(body.data).toBeTruthy();

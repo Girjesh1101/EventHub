@@ -3,6 +3,7 @@ import { test } from "../../fixture/testFixture";
 import { EventFactory } from "../../constructor/events/eventFactory";
 import { EventAssertions } from "../../asserttions/eventAssertions";
 import { Assertion } from "../../utils/genericAssertions";
+import { Logger } from "../../utils/logger";
 
 
 
@@ -17,9 +18,10 @@ test.describe("Event API Tests", () => {
     test('Create Event', async({api})=>{
         
         const response = await api.event().createEvent(eventData);
+         const body = await response.json()
+        Logger.info(`API Response -> ${JSON.stringify(body)}`)
         EventAssertions.verifyAPIEventCreated(response, eventData);
         assert.verifyStatusCode(response,201);
-        const body = await response.json();
         eventID = body.data.id; 
 
     })
@@ -27,15 +29,17 @@ test.describe("Event API Tests", () => {
     test("GET Event details by ID", async ({api})=>{
 
         const response =  await api.event().getEventById(eventID);
+        const body = await response.json()
+        Logger.info(`API Response -> ${JSON.stringify(body)}`)
         EventAssertions.verifyAPIEventCreated(response, eventData);
         assert.verifyStatusCode(response,200);
     })
 
     test("Get All Events", async ({ api }) => {
         const response = await api.event().getAllEvents();
-        expect(response.status()).toBe(200);
-        expect(response.ok()).toBeTruthy();
+        assert.verifyStatusCode(response,200);
         const body = await response.json();
+        Logger.info(`API Response -> ${JSON.stringify(body)}`);
         expect(body.data).toBeDefined();
     });
 

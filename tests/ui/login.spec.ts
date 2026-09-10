@@ -17,11 +17,9 @@ test('Login Test', async({page})=>{
 
     const loginObj = new LoginPage(page);
     const loginData: Login = LoginFactory.create('valid');
-    console.log(loginData);
     await loginObj.goto('/login');
     await loginObj.login(loginData)
     const verifiedEmail = await loginObj.verifyEmail();
-    // expect(verifiedEmail).toBe(loginData.email);
     const assertion = new Assertion();
     assertion.verifyText(loginObj.email_Label, loginData.email);
 
