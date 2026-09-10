@@ -1,0 +1,3 @@
+
+run test runner
+`npm run runner -- --env=uat --suite=e2e`

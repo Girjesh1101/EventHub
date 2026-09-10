@@ -16,13 +16,12 @@ test.describe('Booking Event', ()=>{
         { ...BookingFactory.create('valid'),
             eventId: 1
         }
-    const assert = new Assertion();    
 
     test('Create Booking', async({api})=>{
 
         
         const response = await api.bookings().createBooking(bookingData);
-        assert.verifyStatusCode(response, 201);
+        Assertion.verifyStatusCode(response, 201);
         BookingAssertion.verifyAPIBookingCreated(response , bookingData);
         const body = await response.json();
         bookingId = body.data.id;
@@ -42,14 +41,14 @@ test.describe('Booking Event', ()=>{
     test('GET Booking By bookingID', async({api})=>{
 
         const response = await api.bookings().getBookingById(bookingId);
-        assert.verifyStatusCode(response, 200);
+        Assertion.verifyStatusCode(response, 200);
         BookingAssertion.verifyAPIBookingCreated(response, bookingData);
     })
 
     test('GET Booking By Booking Reference', async({api})=>{
 
         const response = await api.bookings().getBookingByRef(bookingRef);
-        assert.verifyStatusCode(response, 200);
+        Assertion.verifyStatusCode(response, 200);
         const body = await response.json();
         expect(body.data.bookingRef).toBe(bookingRef);
     })
@@ -57,13 +56,13 @@ test.describe('Booking Event', ()=>{
      test('DELETE Booking By bookingID', async({api})=>{
 
         const response = await api.bookings().deleteBooking(bookingId);
-        assert.verifyStatusCode(response, 200);
+        Assertion.verifyStatusCode(response, 200);
         const body = await response.json();
         expect(body.success).toBe(true);
         expect(body.message).toBe('Booking cancelled');
 
         const postDeleteRes = await api.bookings().getBookingById(bookingId);
-        assert.verifyStatusCode(postDeleteRes, 404);
+        Assertion.verifyStatusCode(postDeleteRes, 404);
         const postDeletebody = await postDeleteRes.json();
         expect(postDeletebody.error).toBe(`Booking with id ${bookingId} not found`);
 

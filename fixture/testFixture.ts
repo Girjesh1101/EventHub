@@ -12,8 +12,6 @@ type ApiFixture = {
     page: Page
 }
 
-// const BASE_URL = "https://api.eventhub.rahulshettyacademy.com";
-// const UI_BASE_URL = process.env.BASE_URL;
 export const test = base.extend<ApiFixture>({
 
     token: async({request}, use)=>{
