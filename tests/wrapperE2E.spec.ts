@@ -31,7 +31,7 @@ test('end to end flow', async ({page, api})=>{
 
     const totalPrice: number =  bookingData.quantity * eventData.price;
     expect(Number( totalPriceLabel)).toBe(totalPrice)
-    const bookingId = await booking.captureBookingId();
+    const bookingId = await booking.captureBookingRef();
     const bookingDetails  = await booking.captureBookingDetails();
     
     BookingAssertion.verifyBookingCreated(

@@ -6,8 +6,8 @@ export class Assertion {
         await expect(ele).toBeVisible();
     }
 
-    static async verifyText(ele: Locator , txt: string){
-        await expect(ele).toHaveText(txt);
+    static async verifyText(actual: string , expected: string){
+        expect(actual).toBe(expected)
     }
 
     static async verifyValue(ele: Locator, value: string){

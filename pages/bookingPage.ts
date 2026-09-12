@@ -87,7 +87,7 @@ export class BookingPage {
         return total_price;
     }
 
-    async captureBookingId():Promise<string>{
+    async captureBookingRef():Promise<string>{
         Logger.info(`Capture BookingID : ${await this.captureBookingIdLabel.innerText()}`);
         return await this.captureBookingIdLabel.innerText();
     }
