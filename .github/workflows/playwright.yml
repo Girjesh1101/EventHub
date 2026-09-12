@@ -26,6 +26,8 @@ jobs:
       
       - name: Debug env
         run: echo "UI_BASE_URL length is ${#UI_BASE_URL}"
+        env:
+          UI_BASE_URL: ${{ secrets.UI_BASE_URL }}
 
       - name: Run Playwright tests
         env:
