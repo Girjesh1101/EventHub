@@ -32,7 +32,13 @@ export class SearchPage {
     }
 
     async captureSeat(eventName:string):Promise<string>{
-        const captureSeatsLabel = await this.allCard.filter({hasText: eventName}).locator('.text-xs').innerText();
+        const captureSeatsLabel = await this.allCard
+            .filter({hasText: eventName})
+            .locator('.text-xs')
+            .filter({ hasText: /seats available/i })
+            .first()
+            .innerText();
+
         const seats = captureSeatsLabel.split(" ")[0];
         Logger.info(`Available seats for ${eventName}: ${seats}`);
         return seats;
