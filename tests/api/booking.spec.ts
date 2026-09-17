@@ -7,7 +7,7 @@ import { Assertion } from "../../utils/genericAssertions";
 
 
 
-test.describe('Booking Event', ()=>{
+test.describe('@API Booking Event', ()=>{
     test.describe.configure({mode:"serial"});
 
     let bookingId: number;

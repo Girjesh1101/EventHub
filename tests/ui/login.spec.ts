@@ -13,15 +13,14 @@ import { Assertion } from "../../utils/genericAssertions";
 
 
 const eventName : string = process.env.eventName!;
-test('Login Test', async({page})=>{
+test('@regression Login Test', async({page})=>{
 
     const loginObj = new LoginPage(page);
     const loginData: Login = LoginFactory.create('valid');
     await loginObj.goto('/login');
     await loginObj.login(loginData)
     const verifiedEmail = await loginObj.verifyEmail();
-    const assertion = new Assertion();
-    assertion.verifyText(loginObj.email_Label, loginData.email);
+    Assertion.verifyValue(loginObj.email_Label, loginData.email);
 
     const search = new SearchPage(page);
     const totalSeatAvailable = await search.searchEventAndBook(eventName);
@@ -33,7 +32,7 @@ test('Login Test', async({page})=>{
  
     const bookingData: Booking = BookingFactory.create('valid');
     const totalPrice = await booking.fillBookingDetails(bookingData);
-    const bookingId = await booking.captureBookingId();
+    const bookingId = await booking.captureBookingRef();
     const {customerName,ticket ,total}  = await booking.captureBookingDetails();
 
     expect(customerName).toBe(bookingData.customerName);

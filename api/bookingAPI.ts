@@ -6,7 +6,7 @@ export class BookingAPI extends ApiClient{
 
     async getAllBookings(){
 
-        Logger.info('')
+        Logger.info('Calling All Booking API')
         const response = await this.get(`/api/bookings`);
         Logger.info(`GET allBooking Response status : ${response.status()}`)
         if(!response.ok()){

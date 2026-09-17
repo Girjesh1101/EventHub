@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import { Booking } from "../../module/booking";
 import { BookingBuilder } from "./BookingBuilder";
 
@@ -28,3 +29,15 @@ export class invalidBooking implements BookingStrategy {
             .build();
     }
 }
+
+export class randomBooking implements BookingStrategy {
+    create(): Booking {
+        return new BookingBuilder()
+            .withCustomerName(faker.internet.email())
+            .withCustomerEmail(faker.person.fullName())
+            .withCustomerPhone(faker.phone.number())
+            .build();
+    }
+}
+
+

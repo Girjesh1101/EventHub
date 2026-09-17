@@ -112,6 +112,10 @@ npx tsx runner/testRunner.ts --env=qa --suite=e2e
 - `--env` : environment name such as `qa`, `dev`
 - `--suite` : `all`, `api`, or `e2e`
 
+```bash
+npm run runner -- --suite=e2e --env=qa
+```
+
 ## Playwright Config
 
 The main Playwright config is in `playwright.config.ts`.

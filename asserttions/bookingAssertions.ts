@@ -1,5 +1,6 @@
 import { APIResponse, expect } from "@playwright/test";
 import { APIBooking, Booking } from "../module/booking";
+import { Logger } from "../utils/logger";
 
 export class BookingAssertion {
 
@@ -13,7 +14,8 @@ export class BookingAssertion {
             total: string
         },
         expectedTotalPrice : number
-    ){  
+    ){ 
+        Logger.info('UI Verify booking cetails creation') 
         expect(bookingID).toBeTruthy();
         expect(actualDetails.customerName).toBe(bookingData.customerName);
         expect(Number(actualDetails.ticket)).toBe(bookingData.quantity);
@@ -24,7 +26,8 @@ export class BookingAssertion {
         response: APIResponse,
         expectedData: APIBooking
     ){
-        // expect(response.status()).toBe(201);
+
+        Logger.info('API Verify booking cetails creation') 
         const body = await response.json();
         expect(body.data.eventId).toEqual(expectedData.eventId);
         expect(body.data.status).toEqual('confirmed');
