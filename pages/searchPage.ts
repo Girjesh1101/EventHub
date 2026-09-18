@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { Logger } from "../utils/logger";
+import { reportStep } from "../utils/allureReports";
 
 export class SearchPage {
 
@@ -17,42 +18,52 @@ export class SearchPage {
     }
 
     async navigateToEvents():Promise<void>{
-        Logger.info("Opening Events page");
-        await this.eventBtnNav.click();
+        await reportStep('Open Events page', async ()=>{
+            Logger.info("Opening Events page");
+            await this.eventBtnNav.click();
+        });
     }
 
     async waitForEventPageLoad():Promise<void>{
-        Logger.info("Waiting for event page to load");
-        await this.allCard.first().waitFor({state:'visible'});
+        await reportStep('Wait for Events page to load', async ()=>{
+            Logger.info("Waiting for event page to load");
+            await this.allCard.first().waitFor({state:'visible'});
+        });
     }
 
     async searchEvent(eventName:string):Promise<void>{
-        Logger.info(`Searching event: ${eventName}`);
-        await this.searchInput.fill(eventName);
+        await reportStep(`Search event: ${eventName}`, async ()=>{
+            Logger.info(`Searching event: ${eventName}`);
+            await this.searchInput.fill(eventName);
+        });
     }
 
     async captureSeat(eventName:string):Promise<string>{
-        const captureSeatsLabel = await this.allCard
-            .filter({hasText: eventName})
-            .locator('.text-xs')
-            .filter({ hasText: /seats available/i })
-            .first()
-            .innerText();
+        return await reportStep(`Capture available seats for ${eventName}`, async ()=>{
+            const captureSeatsLabel = await this.allCard
+                .filter({hasText: eventName})
+                .locator('.text-xs')
+                .filter({ hasText: /seats available/i })
+                .first()
+                .innerText();
 
-        const seats = captureSeatsLabel.split(" ")[0];
-        Logger.info(`Available seats for ${eventName}: ${seats}`);
-        return seats;
+            const seats = captureSeatsLabel.split(" ")[0];
+            Logger.info(`Available seats for ${eventName}: ${seats}`);
+            return seats;
+        });
     }
 
     async searchEventAndBook(eventName:string):Promise<string>{
-        Logger.info(`Search and booking flow started for: ${eventName}`);
-        await this.navigateToEvents();
-        await this.waitForEventPageLoad();
-        await this.searchEvent(eventName);
-        const eventSeat = await this.captureSeat(eventName);
-        await this.allCard.filter({hasText: eventName}).locator("#book-now-btn").click();
-        Logger.info(`Clicked Book Now for: ${eventName}`);
-        return eventSeat;
+        return await reportStep(`Search and book event: ${eventName}`, async ()=>{
+            Logger.info(`Search and booking flow started for: ${eventName}`);
+            await this.navigateToEvents();
+            await this.waitForEventPageLoad();
+            await this.searchEvent(eventName);
+            const eventSeat = await this.captureSeat(eventName);
+            await this.allCard.filter({hasText: eventName}).locator("#book-now-btn").click();
+            Logger.info(`Clicked Book Now for: ${eventName}`);
+            return eventSeat;
+        });
     }
 
 

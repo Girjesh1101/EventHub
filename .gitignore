@@ -10,3 +10,6 @@ node_modules/
 .env.qa
 .env.uat
 .DS_Store
+allure-report
+allure-results
+allure-reports

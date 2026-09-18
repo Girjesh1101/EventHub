@@ -1,6 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import { Booking } from "../module/booking";
 import { Logger } from "../utils/logger";
+import { reportStep } from "../utils/allureReports";
 
 export class BookingPage {
 
@@ -34,62 +35,84 @@ export class BookingPage {
 
 
     async captureEventName():Promise<string>{
-        await this.eventNameLabel.waitFor({state: "visible"});
-        Logger.info(`Capture event Name : ${await this.eventNameLabel.innerText()}`)
-        return await this.eventNameLabel.innerText();
+        return await reportStep('Capture event name', async ()=>{
+            await this.eventNameLabel.waitFor({state: "visible"});
+            const eventName = await this.eventNameLabel.innerText();
+            Logger.info(`Capture event Name : ${eventName}`);
+            return eventName;
+        });
     }
 
     async captureEventPrice():Promise<string>{
-        Logger.info('Capture Event Price')
-        return (await this.eventPrice.innerText()).replace("$","").replace(",","");
+        return await reportStep('Capture event price', async ()=>{
+            Logger.info('Capture Event Price');
+            return (await this.eventPrice.innerText()).replace("$","").replace(",","");
+        });
     }
 
     async enterQuantity(qty: number){
-        Logger.info(`Quantity : ${qty}`)
-        for(let i  = 1 ; i< qty ; i++){
-            await this.quantityBtn.click();
-        }
+        await reportStep(`Set quantity to ${qty}`, async ()=>{
+            Logger.info(`Quantity : ${qty}`);
+            for(let i  = 1 ; i< qty ; i++){
+                await this.quantityBtn.click();
+            }
+        });
     }
 
     async eneterCustomerEmail(customerEmail: string):Promise<void>{
-        Logger.info(`Ente Phone Customer Email : ${customerEmail}`);
-        await this.customerEmailInput.fill(customerEmail);
+        await reportStep(`Enter customer email`, async ()=>{
+            Logger.info(`Ente Phone Customer Email : ${customerEmail}`);
+            await this.customerEmailInput.fill(customerEmail);
+        });
     }
 
     async enterCustomerName(customerName: string):Promise<void>{
-        Logger.info(`Ente Phone Customer Name : ${customerName}`);
-        await this.customerNameInput.fill(customerName);
+        await reportStep(`Enter customer name`, async ()=>{
+            Logger.info(`Ente Phone Customer Name : ${customerName}`);
+            await this.customerNameInput.fill(customerName);
+        });
     }
 
      async enterCustomerPhone(customerPhone: string):Promise<void>{
-        Logger.info(`Ente Phone Customer Phone : ${customerPhone}`);
-        await this.customerPhoneInput.fill(customerPhone);
+        await reportStep(`Enter customer phone`, async ()=>{
+            Logger.info(`Ente Phone Customer Phone : ${customerPhone}`);
+            await this.customerPhoneInput.fill(customerPhone);
+        });
     }
 
     async clickConfirmBooking():Promise<void>{
-        Logger.info(`Clicking on Confirm Booking`)
-        await this.confirmBookingBtn.click();
+        await reportStep('Confirm booking', async ()=>{
+            Logger.info(`Clicking on Confirm Booking`);
+            await this.confirmBookingBtn.click();
+        });
     }
 
     async captureTotalPrice():Promise<string>{
-        const price = await this.totalEventPrice.innerText();
-        Logger.info(`Capture Total Price :  ${price}`);
-        return price.split('$')[1].replace(',','')
+        return await reportStep('Capture total booking price', async ()=>{
+            const price = await this.totalEventPrice.innerText();
+            Logger.info(`Capture Total Price :  ${price}`);
+            return price.split('$')[1].replace(',','');
+        });
     }
 
     async fillBookingDetails(bookingDetails: Booking): Promise<string>{
-        await this.enterQuantity(bookingDetails.quantity);
-        await this.enterCustomerName(bookingDetails.customerName);
-        await this.eneterCustomerEmail(bookingDetails.customerEmail);
-        await this.enterCustomerPhone(bookingDetails.customerPhone);
-        const total_price = await this.captureTotalPrice();
-        await this.clickConfirmBooking();
-        return total_price;
+        return await reportStep('Fill booking form', async ()=>{
+            await this.enterQuantity(bookingDetails.quantity);
+            await this.enterCustomerName(bookingDetails.customerName);
+            await this.eneterCustomerEmail(bookingDetails.customerEmail);
+            await this.enterCustomerPhone(bookingDetails.customerPhone);
+            const total_price = await this.captureTotalPrice();
+            await this.clickConfirmBooking();
+            return total_price;
+        });
     }
 
     async captureBookingRef():Promise<string>{
-        Logger.info(`Capture BookingID : ${await this.captureBookingIdLabel.innerText()}`);
-        return await this.captureBookingIdLabel.innerText();
+        return await reportStep('Capture booking reference', async ()=>{
+            const bookingRef = await this.captureBookingIdLabel.innerText();
+            Logger.info(`Capture BookingID : ${bookingRef}`);
+            return bookingRef;
+        });
     }
 
     async captureBookingDetails(): Promise<{

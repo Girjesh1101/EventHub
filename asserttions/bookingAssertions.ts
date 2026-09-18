@@ -1,4 +1,4 @@
-import { APIResponse, expect } from "@playwright/test";
+import { APIResponse, expect, test } from "@playwright/test";
 import { APIBooking, Booking } from "../module/booking";
 import { Logger } from "../utils/logger";
 

@@ -6,9 +6,11 @@ import { BookingPage } from "../pages/bookingPage";
 import { Booking } from "../module/booking";
 import { BookingFactory } from "../constructor/Booking/BookingFactory";
 import { BookingHistory } from "../pages/bookingHistory";
+import * as allure from 'allure-js-commons'
 
 test('end to end flow', async ({page, api})=>{
 
+    await allure.displayName('End to End Journery')
 
     const eventData = EventFactory.create('Confrence');
     const eventResponse = await api.event().createEvent(eventData);

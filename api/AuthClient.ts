@@ -1,26 +1,28 @@
 import { APIRequestContext } from "@playwright/test";
+import { reportStep } from "../utils/allureReports";
 
 export class AuthClient {
 
     constructor(private api: APIRequestContext, private baseUrl:string){}
 
     async login(email: string, password:string): Promise<string>{
+        return await reportStep(`Login API for ${email}`, async ()=>{
+            const response = await this.api.post(`${this.baseUrl}`, {
+                data:{
+                    email,
+                    password
+                }
+            });
 
-        const response = await this.api.post(`${this.baseUrl}`, {
-            data:{
-                email,
-                password
+            if(!response.ok()){
+                throw new Error(`Login failed with status code: ${response.status()}`);
             }
-        })
 
-        if(!response.ok()){
-            throw new Error(`Login failed with status code: ${response.status()}`);
-        }
-    
-        const body = await response.json();
-        if(!body.token){
-            throw new Error(`Login success but does not contain a token`);
-        }
-        return body.token;
+            const body = await response.json();
+            if(!body.token){
+                throw new Error(`Login success but does not contain a token`);
+            }
+            return body.token;
+        });
     }
 }
