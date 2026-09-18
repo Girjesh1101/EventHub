@@ -27,11 +27,10 @@ test.describe("Event API Tests", () => {
     })
 
     test("GET Event details by ID", async ({api})=>{
-        const eventID = 116183;
         const response =  await api.event().getEventById(eventID);
         const body = await response.json()
         Logger.info(`API Response -> ${JSON.stringify(body)}`)
-        // EventAssertions.verifyAPIEventCreated(response, eventData);
+        EventAssertions.verifyAPIEventCreated(response, eventData);
         Assertion.verifyStatusCode(response,200);
     })
 

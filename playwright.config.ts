@@ -27,7 +27,7 @@ export default defineConfig({
   globalTeardown: require.resolve('./config/globalTearDown'),
   reporter: [
     ['html'],
-    ['allure-playwright', {open: 'always'}]
+    ['allure-playwright']
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -36,8 +36,9 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    headless: false,
-    baseURL: envConfig.baseURL
+    headless: true,
+    baseURL: envConfig.baseURL,
+    screenshot: 'only-on-failure'
   },
 
   /* Configure projects for major browsers */

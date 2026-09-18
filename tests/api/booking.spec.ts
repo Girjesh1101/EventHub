@@ -14,7 +14,7 @@ test.describe('@API Booking Event', ()=>{
     let bookingRef: string;
     const bookingData: APIBooking = 
         { ...BookingFactory.create('valid'),
-            eventId: 1
+            eventId: 285
         }
 
     test('Create Booking', async({api})=>{
