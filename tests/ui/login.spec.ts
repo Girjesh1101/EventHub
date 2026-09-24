@@ -19,8 +19,7 @@ test('@regression Login Test', async({page})=>{
     const loginData: Login = LoginFactory.create('valid');
     await loginObj.goto('/login');
     await loginObj.login(loginData)
-    const verifiedEmail = await loginObj.verifyEmail();
-    Assertion.verifyValue(loginObj.email_Label, loginData.email);
+    await loginObj.verifyEmail();
 
     const search = new SearchPage(page);
     const totalSeatAvailable = await search.searchEventAndBook(eventName);

@@ -127,6 +127,12 @@ Key settings:
 - HTML reporter enabled
 - base URL loaded from environment config
 
+Generate/open Allure:
+
+```bash
+rm -rf allure-results allure-report && npx playwright test && npx allure generate allure-results --clean -o allure-report && npx allure open allure-report
+```
+
 ## Notes
 
 - Keep credentials and URLs in environment files instead of hardcoding them in test files.

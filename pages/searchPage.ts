@@ -34,6 +34,7 @@ export class SearchPage {
     async searchEvent(eventName:string):Promise<void>{
         await reportStep(`Search event: ${eventName}`, async ()=>{
             Logger.info(`Searching event: ${eventName}`);
+            await this.searchInput.waitFor({state:'visible'});
             await this.searchInput.fill(eventName);
         });
     }

@@ -8,7 +8,8 @@
     "e2e": "npx playwright test tests/e2e.spec.ts",
     "test:qa": "ENV=qa playwright test tests/e2e.spec.ts",
     "runner": "tsx runner/testrunner.ts",
-    "tag:api": "npx playwright test --grep @API"
+    "tag:api": "npx playwright test --grep @API",
+    "test:pareller": "npx playwright test tests/ui/login.spec.ts --project=chromium --project=webkit"
   },
   "keywords": [],
   "author": "",
